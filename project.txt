@@ -1,0 +1,16 @@
+nom du projet : Démonstrateur graphique
+no de projet  : 2418
+date          : 15.11.2024
+
+explicatif du projet:
+---------------------
+
+Réaliser un démonstrateur avec écran graphique. Pour afficher diverses formes graphiques de base
+(point, ligne, cercle). 
+
+Etat avancement:
+Voir rapport et feuille de modification.
+• MPLAB X IDE : 5.50
+• Harmony : 2.06
+• XC32 : 2.50
+• Altium V24
