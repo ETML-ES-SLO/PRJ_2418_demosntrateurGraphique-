@@ -30,3 +30,11 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 | REG_PCLK          | 0x302070      | PCLK frequency divider, 0 = disable   |
 | REG_DLSWAP        | 0x302054      | Display list swap control             |
 | RAM_DL            | 0x300000      | Display List RAM                      |
+
+### Schéma de mesures pour le test des fonctions
+
+### Test fonction **spi1_write8** pour écrire une donnée 8bits sur le bus SPI
+
+Test d'envoie de la valeur **0xA8** sur le bus SPI à 10MHz
+![spi1_write8](img_git/spi1_write8.png)
+

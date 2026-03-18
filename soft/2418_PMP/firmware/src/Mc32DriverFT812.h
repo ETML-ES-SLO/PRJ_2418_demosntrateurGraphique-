@@ -12,195 +12,96 @@
 //
 //----------------------------------------------------------------------------//
 
-#ifndef __MC32DRIVERFT812_H
-#define __MC32DRIVERFT812_H
+#ifndef _MC32DRIVERFT812_H
+#define _MC32DRIVERFT812_H
+
+//------------------------------------------------//
+// Inclusion librairies
+//------------------------------------------------//
+#include <stdint.h>
+#include <stdbool.h>
+
+//------------------------------------------------//
+// Param écran
+//------------------------------------------------//
+#define HSIZE 0
 
 //------------------------------------------------//
 // Définition des adresse mémoire du driver FT812
 //------------------------------------------------//
+#define REG_HSIZE       0x302034
+#define REG_VSIZE       0x302048
+#define REG_HCYCLE      0x30202C
+#define REG_HOFFSET     0x302030
+#define REG_HSYNC0      0x302038
+#define REG_HSYNC1      0x30203C
+#define REG_VCYCLE      0x302040
+#define REG_VOFFSET     0x302044
+#define REG_VSYNC0      0x30204C
+#define REG_VSYNC1      0x302050
+#define REG_PCLK        0x302070
+#define REG_DLSWAP      0x302054
+#define RAM_DL          0x300000
 
+//------------------------------------------------//
+// Macros
+//------------------------------------------------//
+
+// Chip select pour SPI
+#define CS_LOW()        LATAbits.LATA0 = 0
+#define CS_HIGH()       LATAbits.LATA0 = 1
+
+// Chip graphique
+#define PD_LOW()        LATAbits.LATA1 = 0  // Désactive chip graph.
+#define PD_HIGH()       LATAbits.LATA1 = 1 // Active chip graphique
 
 //------------------------------------------------//
 // Définition des prototypes de fonctions
 //------------------------------------------------//
+
+//----------------------------------------------------------------------------------//
+//-- nom fct : ft812_init 
+//-- paramètre entrée : type générique - nom variable 
+//-- paramètre sortie : type générique - nom variable 
+//-- paramètre référence (IN-OUT) :   type générique - nom variable 
+//-- description : fonctionnement de la fct en quelques mots 
+//-- démonstration : calcul 
+//-- aide - référence - lien : doc externe pour la compréhension de la fct 
+//----------------------------------------------------------------------------------//
 void ft812_init(void);
 
-/* ************************************************************************** */
-/** Descriptive File Name
+//----------------------------------------------------------------------------------//
+//-- nom fct : spi1_wrtie8  
+//-- paramètre entrée : type générique - nom variable 
+//-- paramètre sortie : type générique - nom variable 
+//-- paramètre référence (IN-OUT) :   type générique - nom variable 
+//-- description : fonctionnement de la fct en quelques mots 
+//-- démonstration : calcul 
+//-- aide - référence - lien : doc externe pour la compréhension de la fct 
+//----------------------------------------------------------------------------------//
+void spi1_wrtie8(uint8_t data);
 
-  @Company
-    Company Name
+//----------------------------------------------------------------------------------//
+//-- nom fct : spi1_wrtie16 
+//-- paramètre entrée : type générique - nom variable 
+//-- paramètre sortie : type générique - nom variable 
+//-- paramètre référence (IN-OUT) :   type générique - nom variable 
+//-- description : fonctionnement de la fct en quelques mots 
+//-- démonstration : calcul 
+//-- aide - référence - lien : doc externe pour la compréhension de la fct 
+//----------------------------------------------------------------------------------//
+void spi1_wrtie16(void);
 
-  @File Name
-    filename.h
+//----------------------------------------------------------------------------------//
+//-- nom fct : spi1_wrtie32  
+//-- paramètre entrée : type générique - nom variable 
+//-- paramètre sortie : type générique - nom variable 
+//-- paramètre référence (IN-OUT) :   type générique - nom variable 
+//-- description : fonctionnement de la fct en quelques mots 
+//-- démonstration : calcul 
+//-- aide - référence - lien : doc externe pour la compréhension de la fct 
+//----------------------------------------------------------------------------------//
+void spi1_wrtie32(void);
 
-  @Summary
-    Brief description of the file.
+#endif _MC32DRIVERFT812_H
 
-  @Description
-    Describe the purpose of this file.
- */
-/* ************************************************************************** */
-
-#ifndef _EXAMPLE_FILE_NAME_H    /* Guard against multiple inclusion */
-#define _EXAMPLE_FILE_NAME_H
-
-
-/* ************************************************************************** */
-/* ************************************************************************** */
-/* Section: Included Files                                                    */
-/* ************************************************************************** */
-/* ************************************************************************** */
-
-/* This section lists the other files that are included in this file.
- */
-
-/* TODO:  Include other files here if needed. */
-
-
-/* Provide C++ Compatibility */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-    /* ************************************************************************** */
-    /* ************************************************************************** */
-    /* Section: Constants                                                         */
-    /* ************************************************************************** */
-    /* ************************************************************************** */
-
-    /*  A brief description of a section can be given directly below the section
-        banner.
-     */
-
-
-    /* ************************************************************************** */
-    /** Descriptive Constant Name
-
-      @Summary
-        Brief one-line summary of the constant.
-    
-      @Description
-        Full description, explaining the purpose and usage of the constant.
-        <p>
-        Additional description in consecutive paragraphs separated by HTML 
-        paragraph breaks, as necessary.
-        <p>
-        Type "JavaDoc" in the "How Do I?" IDE toolbar for more information on tags.
-    
-      @Remarks
-        Any additional remarks
-     */
-#define EXAMPLE_CONSTANT 0
-
-
-    // *****************************************************************************
-    // *****************************************************************************
-    // Section: Data Types
-    // *****************************************************************************
-    // *****************************************************************************
-
-    /*  A brief description of a section can be given directly below the section
-        banner.
-     */
-
-
-    // *****************************************************************************
-
-    /** Descriptive Data Type Name
-
-      @Summary
-        Brief one-line summary of the data type.
-    
-      @Description
-        Full description, explaining the purpose and usage of the data type.
-        <p>
-        Additional description in consecutive paragraphs separated by HTML 
-        paragraph breaks, as necessary.
-        <p>
-        Type "JavaDoc" in the "How Do I?" IDE toolbar for more information on tags.
-
-      @Remarks
-        Any additional remarks
-        <p>
-        Describe enumeration elements and structure and union members above each 
-        element or member.
-     */
-    typedef struct _example_struct_t {
-        /* Describe structure member. */
-        int some_number;
-
-        /* Describe structure member. */
-        bool some_flag;
-
-    } example_struct_t;
-
-
-    // *****************************************************************************
-    // *****************************************************************************
-    // Section: Interface Functions
-    // *****************************************************************************
-    // *****************************************************************************
-
-    /*  A brief description of a section can be given directly below the section
-        banner.
-     */
-
-    // *****************************************************************************
-    /**
-      @Function
-        int ExampleFunctionName ( int param1, int param2 ) 
-
-      @Summary
-        Brief one-line description of the function.
-
-      @Description
-        Full description, explaining the purpose and usage of the function.
-        <p>
-        Additional description in consecutive paragraphs separated by HTML 
-        paragraph breaks, as necessary.
-        <p>
-        Type "JavaDoc" in the "How Do I?" IDE toolbar for more information on tags.
-
-      @Precondition
-        List and describe any required preconditions. If there are no preconditions,
-        enter "None."
-
-      @Parameters
-        @param param1 Describe the first parameter to the function.
-    
-        @param param2 Describe the second parameter to the function.
-
-      @Returns
-        List (if feasible) and describe the return values of the function.
-        <ul>
-          <li>1   Indicates an error occurred
-          <li>0   Indicates an error did not occur
-        </ul>
-
-      @Remarks
-        Describe any special behavior not described above.
-        <p>
-        Any additional remarks.
-
-      @Example
-        @code
-        if(ExampleFunctionName(1, 2) == 0)
-        {
-            return 3;
-        }
-     */
-    int ExampleFunction(int param1, int param2);
-
-
-    /* Provide C++ Compatibility */
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* _EXAMPLE_FILE_NAME_H */
-
-/* *****************************************************************************
- End of File
- */
