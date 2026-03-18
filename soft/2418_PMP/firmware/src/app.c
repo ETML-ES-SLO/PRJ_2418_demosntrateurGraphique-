@@ -56,6 +56,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include <xc.h>
 #include <stdint.h>
+#include "Mc32DriverFT812.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -79,10 +80,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define RAM_DL          0x300000
 
 // Broches /CS et /PD
+/*
 #define CS_LOW()        LATAbits.LATA0 = 0
 #define CS_HIGH()       LATAbits.LATA0 = 1
 #define PD_LOW()        LATAbits.LATA1 = 0
 #define PD_HIGH()       LATAbits.LATA1 = 1
+*/
 
 // *****************************************************************************
 /* Application Data
@@ -234,7 +237,7 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
        
-            ft800_init();
+            //ft800_init();
         
             if (appInitialized)
             {
@@ -247,6 +250,8 @@ void APP_Tasks ( void )
         case APP_STATE_SERVICE_TASKS:
         {
         
+            spi1_wrtie8(0xA8);
+            
             break;
         }
 
