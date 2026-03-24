@@ -20,7 +20,12 @@ Ces commandes sont utilisées pour commander le chip **FT812**, elles servent à
 
 Toutes les commandes sont listées dans le même datasheet de la page 16 à la page 20.
 
-### Adresses F812
+### Timing characteristics du TFT
+Les réglages de base donnés au FT812 dans la fonction d'initialisation proviennent de la page 7 du datasheet **NHD-5.0-800480F-CTXL-T**.
+
+![Réglages F812](img_git/reg_ft812.png)
+
+### Adresses FT812
 
 Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridgetek**.
 

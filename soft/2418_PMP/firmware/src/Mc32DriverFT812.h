@@ -32,6 +32,7 @@
 //------------------------------------------------//
 #define HOST_COMMAND_END        0x00
 #define HOST_COMMAND_BEGINNING  0x40
+#define MEM_WRITE_BEGINNING     0x80
 
 //------------------------------------------------//
 // Host Command (HC) List
@@ -73,6 +74,10 @@
 #define REG_VSYNC1      0x302050
 #define REG_PCLK        0x302070
 #define REG_DLSWAP      0x302054
+#define REG_SWIZZLE     0x302064
+#define REG_PCLK_POL    0x30206C
+#define REG_CSPREAD     0x302068
+#define REG_DITHER      0x302060
 #define RAM_DL          0x300000
 
 //------------------------------------------------//
@@ -90,6 +95,42 @@
 //------------------------------------------------//
 // Définition des prototypes de fonctions
 //------------------------------------------------//
+
+//----------------------------------------------------------------------------------//
+//-- nom fct : ft812_memory_write8 
+//-- paramètre entrée : command => Commande host
+//--                    commandParam => Paramètre de la commande
+//-- paramètre sortie : -
+//-- paramètre référence (IN-OUT) :   - 
+//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
+//-- démonstration : [0x40 + commande][param][0x00] 
+//-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
+//----------------------------------------------------------------------------------//
+void ft812_memory_write8(uint32_t address, uint8_t data);
+
+//----------------------------------------------------------------------------------//
+//-- nom fct : ft812_memory_write8 
+//-- paramètre entrée : command => Commande host
+//--                    commandParam => Paramètre de la commande
+//-- paramètre sortie : -
+//-- paramètre référence (IN-OUT) :   - 
+//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
+//-- démonstration : [0x40 + commande][param][0x00] 
+//-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
+//----------------------------------------------------------------------------------//
+void ft812_memory_write16(uint32_t address, uint16_t data);
+
+//----------------------------------------------------------------------------------//
+//-- nom fct : ft812_memory_write8 
+//-- paramètre entrée : command => Commande host
+//--                    commandParam => Paramètre de la commande
+//-- paramètre sortie : -
+//-- paramètre référence (IN-OUT) :   - 
+//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
+//-- démonstration : [0x40 + commande][param][0x00] 
+//-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
+//----------------------------------------------------------------------------------//
+void ft812_memory_write32(uint32_t address, uint32_t data);
 
 //----------------------------------------------------------------------------------//
 //-- nom fct : ft812_send_host_command 
@@ -124,28 +165,6 @@ void ft812_init(void);
 //-- aide - référence - lien : doc externe pour la compréhension de la fct 
 //----------------------------------------------------------------------------------//
 void spi1_wrtie8(uint8_t data8);
-
-//----------------------------------------------------------------------------------//
-//-- nom fct : spi1_wrtie16 
-//-- paramètre entrée : type générique - nom variable 
-//-- paramètre sortie : type générique - nom variable 
-//-- paramètre référence (IN-OUT) :   type générique - nom variable 
-//-- description : fonctionnement de la fct en quelques mots 
-//-- démonstration : calcul 
-//-- aide - référence - lien : doc externe pour la compréhension de la fct 
-//----------------------------------------------------------------------------------//
-void spi1_wrtie16(uint16_t data16);
-
-//----------------------------------------------------------------------------------//
-//-- nom fct : spi1_wrtie32  
-//-- paramètre entrée : type générique - nom variable 
-//-- paramètre sortie : type générique - nom variable 
-//-- paramètre référence (IN-OUT) :   type générique - nom variable 
-//-- description : fonctionnement de la fct en quelques mots 
-//-- démonstration : calcul 
-//-- aide - référence - lien : doc externe pour la compréhension de la fct 
-//----------------------------------------------------------------------------------//
-void spi1_wrtie32(uint32_t data32);
 
 #endif _MC32DRIVERFT812_H
 

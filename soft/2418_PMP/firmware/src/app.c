@@ -170,7 +170,41 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
        
-            //ft800_init();
+            ft812_init();
+            
+            // -------- DISPLAY LIST (écran bleu) --------
+            // CLEAR_COLOR_RGB(0,0,255)
+            ft812_memory_write8(0x300000, 0xFF);    // Blue
+            ft812_memory_write8(0x300001, 0x00);    // Green
+            ft812_memory_write8(0x300002, 0x00);    // Red
+            ft812_memory_write8(0x300003, 0x02);    // Command clear_color
+            
+            // CLEAR(1,1,1)
+            ft812_memory_write8(0x300004, 0x07);
+            ft812_memory_write8(0x300005, 0x00);
+            ft812_memory_write8(0x300006, 0x00);
+            ft812_memory_write8(0x300007, 0x26);
+
+            // DISPLAY()
+            ft812_memory_write8(0x300008, 0x00);
+            ft812_memory_write8(0x300009, 0x00);
+            ft812_memory_write8(0x30000A, 0x00);
+            ft812_memory_write8(0x30000B, 0x00);
+
+            // -------- APPLY DISPLAY LIST --------
+            ft812_memory_write8(0x302054, 0x02);        // DLSWAP ? active la display list
+
+            // -------- ACTIVE DALLE --------
+            ft812_memory_write8(0x302090, 0x80);        // GPIO_DIR ? GPIO7 sortie
+            ft812_memory_write8(0x302094, 0x80);        // GPIO ? active DISP
+
+            // -------- BACKLIGHT --------
+            // PWM_HZ = 1000 (0x03E8)
+            ft812_memory_write8(0x3020D0, 0xE8);        // fréquence PWM
+            ft812_memory_write8(0x3020D1, 0x03);
+            
+            // PWM_DUTY = 128 (~100%)
+            ft812_memory_write8(0x3020D4, 0x80);        // intensité backlight
         
             if (appInitialized)
             {
@@ -182,10 +216,6 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-            
-            spi1_wrtie8(0x21);
-            spi1_wrtie16(0x4321);
-            spi1_wrtie32(0x87654321);
             
             break;
         }
