@@ -57,6 +57,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <xc.h>
 #include <stdint.h>
 #include "Mc32DriverFT812.h"
+#include <stdbool.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -119,41 +120,6 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-// SPI écriture d'un byte
-static inline void SPI_WRITE(uint8_t v)
-{
-    SPI1BUF = v;
-    while (!SPI1STATbits.SPIRBF);
-    (void)SPI1BUF;
-}
-
-// Écriture 32 bits dans un registre FT812
-void EVE_WRITE(uint32_t addr, uint32_t val)
-{
-    CS_LOW();
-    SPI_WRITE((addr >> 16) & 0x3F);
-    SPI_WRITE((addr >> 8) & 0xFF);
-    SPI_WRITE(addr & 0xFF);
-    SPI_WRITE(val & 0xFF);
-    SPI_WRITE((val >> 8) & 0xFF);
-    SPI_WRITE((val >> 16) & 0xFF);
-    SPI_WRITE((val >> 24) & 0xFF);
-    CS_HIGH();
-}
-
-// Écriture dans Display List
-void DL_WRITE(uint32_t addr, uint32_t val)
-{
-    CS_LOW();
-    SPI_WRITE((addr >> 16) & 0x3F);
-    SPI_WRITE((addr >> 8) & 0xFF);
-    SPI_WRITE(addr & 0xFF);
-    SPI_WRITE(val & 0xFF);
-    SPI_WRITE((val >> 8) & 0xFF);
-    SPI_WRITE((val >> 16) & 0xFF);
-    SPI_WRITE((val >> 24) & 0xFF);
-    CS_HIGH();
-}
 
 /* TODO:  Add any necessary local functions.
 */
@@ -173,39 +139,6 @@ void DL_WRITE(uint32_t addr, uint32_t val)
     See prototype in app.h.
  */
 
-int ft800_init(void)
-{
-    // ***** Init écran *****
-    //Reset FT812
-    volatile int i;
-    PD_LOW();
-    //for (i = 0; i < 500; i++); // Wait
-    PD_HIGH();
-    //for (i = 0; i < 500; i++); // Wait
-    
-    // Timings 800x400
-    EVE_WRITE(REG_HSIZE, 800);
-    EVE_WRITE(REG_VSIZE, 480);
-    EVE_WRITE(REG_HCYCLE, 928);
-    EVE_WRITE(REG_HOFFSET, 88);
-    EVE_WRITE(REG_HSYNC0, 0);
-    EVE_WRITE(REG_HSYNC1, 48);
-    EVE_WRITE(REG_VCYCLE, 525);
-    EVE_WRITE(REG_VOFFSET, 32);
-    EVE_WRITE(REG_VSYNC0, 0);
-    EVE_WRITE(REG_VSYNC1, 3);
-    
-    // Pixel clock
-    EVE_WRITE(REG_PCLK, 2);
-    
-    // Display List: fond bleu
-    DL_WRITE(RAM_DL + 0, 0x020000FF); // CLEAR_COLOR_RGB(0,0,255)
-    DL_WRITE(RAM_DL + 4, 0x26000007); // CLEAR(1,1,1)
-    DL_WRITE(RAM_DL + 8, 0x00000000); // DISPLAY()
-    
-    // Swap DL
-    EVE_WRITE(REG_DLSWAP, 2);
-}
 
 void APP_Initialize ( void )
 {
@@ -249,8 +182,10 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
-            spi1_wrtie8(0xA8);
+            
+            spi1_wrtie8(0x21);
+            spi1_wrtie16(0x4321);
+            spi1_wrtie32(0x87654321);
             
             break;
         }

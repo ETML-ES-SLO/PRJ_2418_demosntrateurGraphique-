@@ -11,6 +11,15 @@ Développer une librairie complète pour pouvoir piloter l'écran **NHD-5.0R-FT8
 **OS**			: Windows 10
 
 ## Mise en place d'une librairie (Mc32DriverFT812)
+### Envoie des **Host Command**
+Les **Host Command** sont envoyées au moyen de la fonction **ft812_send_host_command**, le format d'envoi des commandes est donné dans le datasheet **DS**DS_FT81x** de **Bridgetek**.
+Ces commandes sont utilisées pour commander le chip **FT812**, elles servent à le mettre en mode **SLEEP** ou pour le **RESET** par exemple.
+
+![format Host Command](img_git/format_host_command.png)
+(Source => Page.16 de DS_FT81x)
+
+Toutes les commandes sont listées dans le même datasheet de la page 16 à la page 20.
+
 ### Adresses F812
 
 Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridgetek**.

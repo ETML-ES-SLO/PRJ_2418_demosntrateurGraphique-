@@ -25,6 +25,38 @@
 // Param écran
 //------------------------------------------------//
 #define HSIZE 0
+#define VSIZE 0
+
+//------------------------------------------------//
+// Param FT812
+//------------------------------------------------//
+#define HOST_COMMAND_END        0x00
+#define HOST_COMMAND_BEGINNING  0x40
+
+//------------------------------------------------//
+// Host Command (HC) List
+//------------------------------------------------//
+// Power modes
+#define HC_MODE_ACTIVE  0x00
+#define HC_MODE_STANDBY 0x41
+#define HC_MODE_SLEEP   0x42
+#define HC_MODE_PWRDOWN 0x43
+#define HC_MODE_PD_ROMS 0x49    // Pas de param crée
+
+// Clock & Reset
+#define HC_CLKEXT       0x44
+#define HC_CLKINT       0x48
+#define HC_CLKSEL       0x61    // Pas de param crée
+#define HC_RST_PULSE    0x68
+
+// Configuration
+#define HC_CFG_PINDRIVE     0x70    // Pas de param crée
+#define HC_CFG_PIN_PD_STATE 0x71    // Pas de param crée
+
+//------------------------------------------------//
+// Host Command Param (HCP) List
+//------------------------------------------------//
+#define HCP_PARAM_EMPTY 0x00
 
 //------------------------------------------------//
 // Définition des adresse mémoire du driver FT812
@@ -60,6 +92,18 @@
 //------------------------------------------------//
 
 //----------------------------------------------------------------------------------//
+//-- nom fct : ft812_send_host_command 
+//-- paramètre entrée : command => Commande host
+//--                    commandParam => Paramètre de la commande
+//-- paramètre sortie : -
+//-- paramètre référence (IN-OUT) :   - 
+//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
+//-- démonstration : [0x40 + commande][param][0x00] 
+//-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
+//----------------------------------------------------------------------------------//
+void ft812_send_host_command(uint8_t command, uint8_t commandParam);
+
+//----------------------------------------------------------------------------------//
 //-- nom fct : ft812_init 
 //-- paramètre entrée : type générique - nom variable 
 //-- paramètre sortie : type générique - nom variable 
@@ -79,7 +123,7 @@ void ft812_init(void);
 //-- démonstration : calcul 
 //-- aide - référence - lien : doc externe pour la compréhension de la fct 
 //----------------------------------------------------------------------------------//
-void spi1_wrtie8(uint8_t data);
+void spi1_wrtie8(uint8_t data8);
 
 //----------------------------------------------------------------------------------//
 //-- nom fct : spi1_wrtie16 
@@ -90,7 +134,7 @@ void spi1_wrtie8(uint8_t data);
 //-- démonstration : calcul 
 //-- aide - référence - lien : doc externe pour la compréhension de la fct 
 //----------------------------------------------------------------------------------//
-void spi1_wrtie16(void);
+void spi1_wrtie16(uint16_t data16);
 
 //----------------------------------------------------------------------------------//
 //-- nom fct : spi1_wrtie32  
@@ -101,7 +145,7 @@ void spi1_wrtie16(void);
 //-- démonstration : calcul 
 //-- aide - référence - lien : doc externe pour la compréhension de la fct 
 //----------------------------------------------------------------------------------//
-void spi1_wrtie32(void);
+void spi1_wrtie32(uint32_t data32);
 
 #endif _MC32DRIVERFT812_H
 
