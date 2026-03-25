@@ -169,7 +169,8 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
+            
+            /*
             ft812_init();
             
             // -------- DISPLAY LIST (écran bleu) --------
@@ -205,6 +206,7 @@ void APP_Tasks ( void )
             
             // PWM_DUTY = 128 (~100%)
             ft812_memory_write8(0x3020D4, 0x80);        // intensité backlight
+            */
         
             if (appInitialized)
             {
@@ -216,6 +218,8 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
+            
+            ft812_memory_write16(0x123456, 0x1234);
             
             break;
         }
