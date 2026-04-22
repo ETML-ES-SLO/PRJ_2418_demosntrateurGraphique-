@@ -45,7 +45,8 @@ build/default/production/_ext/1360937237/Mc32DriverFT812.o: \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioTransmitMode_Unsupported.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioProtocolMode_Unsupported.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h \
- ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h
+ ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32Delays.h
 
 ../src/Mc32DriverFT812.h:
 
@@ -140,3 +141,5 @@ build/default/production/_ext/1360937237/Mc32DriverFT812.o: \
 ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h:
 
 ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32Delays.h:

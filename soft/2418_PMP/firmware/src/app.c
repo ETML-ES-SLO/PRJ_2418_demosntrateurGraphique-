@@ -56,8 +56,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include <xc.h>
 #include <stdint.h>
-#include "Mc32DriverFT812.h"
 #include <stdbool.h>
+#include "Mc32DriverFT812.h"
+#include "Mc32DriverEveTft.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -65,28 +66,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-// Adresses F812
-#define REG_HSIZE       0x302034
-#define REG_VSIZE       0x302048
-#define REG_HCYCLE      0x30202C
-#define REG_HOFFSET     0x302030
-#define REG_HSYNC0      0x302038
-#define REG_HSYNC1      0x30203C
-#define REG_VCYCLE      0x302040
-#define REG_VOFFSET     0x302044
-#define REG_VSYNC0      0x30204C
-#define REG_VSYNC1      0x302050
-#define REG_PCLK        0x302070
-#define REG_DLSWAP      0x302054
-#define RAM_DL          0x300000
-
-// Broches /CS et /PD
-/*
-#define CS_LOW()        LATAbits.LATA0 = 0
-#define CS_HIGH()       LATAbits.LATA0 = 1
-#define PD_LOW()        LATAbits.LATA1 = 0
-#define PD_HIGH()       LATAbits.LATA1 = 1
-*/
 
 // *****************************************************************************
 /* Application Data
@@ -211,6 +190,17 @@ void APP_Tasks ( void )
             if (appInitialized)
             {
             
+                PD_LOW;
+                delay_msCt(20);
+                PD_HIGH;
+                delay_msCt(20);
+                ft812_send_host_command(0x68, 0x00);
+                delay_msCt(1);
+                ft812_send_host_command(0x00, 0x00);
+                delay_msCt(50);
+                
+                //ft812_init();
+                
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
@@ -219,7 +209,9 @@ void APP_Tasks ( void )
         case APP_STATE_SERVICE_TASKS:
         {
             
-            ft812_memory_write16(0x123456, 0x1234);
+            //ft812_memory_write16(0x123456, 0x1234);
+            ft812_memory_read8(REG_ID);
+            //ft812_memory_read8(REG_HSYNC1); // Lire 48 si ok
             
             break;
         }

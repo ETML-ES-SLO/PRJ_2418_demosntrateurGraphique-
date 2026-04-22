@@ -1,7 +1,7 @@
 //----------------------------------------------------------------------------//
 //          Mc32DriverFT812.c
 //----------------------------------------------------------------------------//
-// Description      :    Librairie pour driver graphique FT812
+// Description      :   Librairie pour driver graphique FT812
 //
 // Auteur           :   Karol Stopa
 // Date de création :   11.03.2026
@@ -18,19 +18,20 @@
 
 #include "Mc32DriverFT812.h"
 #include "peripheral\SPI\plib_spi.h"
-
-//------------------------------------------------//
-// Inclusions des fichiers header
-//------------------------------------------------//
+#include "Mc32Delays.h"
 
 //------------------------------------------------//
 // Fonctions
 //------------------------------------------------//
+
+
 void ft812_send_host_command(uint8_t command, uint8_t commandParam)
 {
-    CS_LOW();
-    
+    // Déclarations de variables
     int SpiBusy;
+    
+    // Algorithme pour l'envoi sur SPI
+    CS_LOW;
    
    // MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, (HOST_COMMAND_BEGINNING + command));
@@ -41,14 +42,16 @@ void ft812_send_host_command(uint8_t command, uint8_t commandParam)
      SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
    } while (SpiBusy == 1);
    
-   CS_HIGH();
+   CS_HIGH;
 }
 
 void ft812_memory_write8(uint32_t address, uint8_t data)
 {
-    CS_LOW();
-    
+    // Déclarations de variables
     int SpiBusy;
+    
+    // Algorithme pour l'envoi sur SPI
+    CS_LOW;
 
     // MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, 
@@ -64,14 +67,16 @@ void ft812_memory_write8(uint32_t address, uint8_t data)
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
-    CS_HIGH();    
+    CS_HIGH;    
 }
 
 void ft812_memory_write16(uint32_t address, uint16_t data)
 {
-    CS_LOW();
-    
+    // Déclarations de variables
     int SpiBusy;
+    
+    // Algorithme pour l'envoi sur SPI
+    CS_LOW;
 
     // MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, 
@@ -88,14 +93,16 @@ void ft812_memory_write16(uint32_t address, uint16_t data)
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
-    CS_HIGH();    
+    CS_HIGH;    
 }
 
 void ft812_memory_write32(uint32_t address, uint32_t data)
 {
-    CS_LOW();
-    
+    // Déclarations de variables
     int SpiBusy;
+    
+    // Algorithme pour l'envoi sur SPI
+    CS_LOW;
 
     // MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, 
@@ -114,11 +121,15 @@ void ft812_memory_write32(uint32_t address, uint32_t data)
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
-    CS_HIGH();    
+    CS_HIGH;    
 }
 
 void ft812_init(void)
 {
+    // Allume le chip graphique
+    PD_HIGH;
+    delay_msCt(20);
+    
     //--------------------//
     //  Host command
     //--------------------//
@@ -134,43 +145,74 @@ void ft812_init(void)
     //--------------------//
     
     // Horizontal Timing
-    ft812_memory_write16(REG_HSIZE, 800);   // Largeur visible en pixel
-    ft812_memory_write16(REG_HCYCLE, 928);  // Largeur total en pixel
-    ft812_memory_write16(REG_HOFFSET, 88);  // Début zone visible en pixel
-    ft812_memory_write16(REG_HSYNC0, 0);    // Début HSYNC
-    ft812_memory_write16(REG_HSYNC1, 48);   // Fin HSYNC
+    ft812_memory_write16(REG_HSIZE, LCD_HSIZE);
+    ft812_memory_write16(REG_HCYCLE, LCD_HCYCLE);
+    ft812_memory_write16(REG_HOFFSET, LCD_HOFFSET);
+    ft812_memory_write16(REG_HSYNC0, LCD_HSYNC0);
+    ft812_memory_write16(REG_HSYNC1, LCD_HSYNC1);
     
     // Vertical Timing
-    ft812_memory_write16(REG_VSIZE, 480);   // Hauteur visible en pixel
-    ft812_memory_write16(REG_VCYCLE, 525);  // Hauteur total en pixel
-    ft812_memory_write16(REG_VOFFSET, 32);  // Début zone visible en pixel
-    ft812_memory_write16(REG_VSYNC0, 0);    // Début VSYNC
-    ft812_memory_write16(REG_VSYNC1, 3);    // Fin VSYNC
+    ft812_memory_write16(REG_VSIZE, LCD_VSIZE);
+    ft812_memory_write16(REG_VCYCLE, LCD_VCYCLE);
+    ft812_memory_write16(REG_VOFFSET, LCD_VOFFSET);
+    ft812_memory_write16(REG_VSYNC0, LCD_VSYNC0);
+    ft812_memory_write16(REG_VSYNC1, LCD_VSYNC1);
     
     // Clock Setting
-    ft812_memory_write8(REG_PCLK, 2);
-    ft812_memory_write8(REG_SWIZZLE, 0);    // Mapping RBG standard
-    ft812_memory_write8(REG_PCLK_POL, 0);   // Polarité pixel clock
-    ft812_memory_write8(REG_CSPREAD, 0);    // Désactive le clock spreading
-    ft812_memory_write8(REG_DITHER, 1);     // Active le dithering couleur
+    ft812_memory_write8(REG_PCLK, LCD_PCLK);
+    ft812_memory_write8(REG_SWIZZLE, LCD_SWIZZLE);
+    ft812_memory_write8(REG_PCLK_POL, LCD_PCLK_POL);
+    ft812_memory_write8(REG_CSPREAD, LCD_CSPREAD);
+    ft812_memory_write8(REG_DITHER, LCD_DITHER);
 }
 
-void ft812_init_with_basic_display(void)
+uint8_t ft812_memory_read8(uint32_t address)
 {
-    
-}
-
-void spi1_wrtie8(uint8_t data8)
-{
-    CS_LOW();
-    
+    // Déclarations de variables
     int SpiBusy;
-   
-   PLIB_SPI_BufferWrite(SPI_ID_1, data8);
+    uint8_t readData;
+    
+    // Vider les octets RX parasites adresse
+    while (!PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1))
+    {
+        uint8_t dump = PLIB_SPI_BufferRead(SPI_ID_1);
+        (void)dump;
+    }
+    
+    // Algorithme pour l'envoi sur SPI
+    CS_LOW;
 
-   do {
-     SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
-   } while (SpiBusy == 1);
-   
-   CS_HIGH();
+    // MSB firt | Envoie adresse à lire
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0x3F);
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
+    
+    // Envoie octet dummy pour lecture
+    PLIB_SPI_BufferWrite(SPI_ID_1, MEM_READ_DUMMY_BYTE);
+    
+    // Attend fin envoie
+    while(PLIB_SPI_IsBusy(SPI_ID_1));
+    
+    //Vider les octets RX parasites adresse
+    while (!PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1))
+    {
+        uint8_t dump = PLIB_SPI_BufferRead(SPI_ID_1);
+        (void)dump;
+    }
+    
+    // Lécture data -----
+    
+    // Envoie octet dummy pour gen. d'une clock sur le SPI
+    PLIB_SPI_BufferWrite(SPI_ID_1, MEM_READ_DUMMY_BYTE);
+    
+    // Attend fin envoie
+    while(PLIB_SPI_IsBusy(SPI_ID_1));
+    
+    // Attend arrivée dans fifo
+    while (PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1));
+    readData = PLIB_SPI_BufferRead(SPI_ID_1);
+    
+    CS_HIGH;
+    
+    return readData;
 }
