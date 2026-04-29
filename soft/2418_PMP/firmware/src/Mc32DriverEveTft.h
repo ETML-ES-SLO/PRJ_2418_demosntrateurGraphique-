@@ -32,11 +32,11 @@
 //------------------------------------------------//
 
 //----------------------------------------------------------------------------------//
-//-- nom fct : lcd_init 
+//-- nom fct : eve_init 
 //-- paramètre entrée : -
 //-- paramètre sortie : -
 //-- paramètre référence (IN-OUT) :   - 
-//-- description : Initialisation du LCD et du chip FT812
+//-- description : Initialisation du LCD
 //-- démonstration : - 
 //-- aide - référence - lien : -
 //----------------------------------------------------------------------------------//

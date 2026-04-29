@@ -33,8 +33,7 @@ void ft812_send_host_command(uint8_t command, uint8_t commandParam)
     // Algorithme pour l'envoi sur SPI
     CS_LOW;
    
-   // MSB firt
-    PLIB_SPI_BufferWrite(SPI_ID_1, (HOST_COMMAND_BEGINNING + command));
+    PLIB_SPI_BufferWrite(SPI_ID_1, command);
     PLIB_SPI_BufferWrite(SPI_ID_1, commandParam);
     PLIB_SPI_BufferWrite(SPI_ID_1, HOST_COMMAND_END);
 
@@ -85,10 +84,10 @@ void ft812_memory_write16(uint32_t address, uint16_t data)
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
-    // Send data
-    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
+    // Send data (litlle-endian)
     PLIB_SPI_BufferWrite(SPI_ID_1, (data & 0xFF));
-
+    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
+    
     do {
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
@@ -111,11 +110,11 @@ void ft812_memory_write32(uint32_t address, uint32_t data)
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
-    // Send data
-    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 24) & 0xFF);
-    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 16) & 0xFF);
-    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
+    // Send data (litlle-endian)
     PLIB_SPI_BufferWrite(SPI_ID_1, (data & 0xFF));
+    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
+    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 16) & 0xFF);
+    PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 24) & 0xFF);
 
     do {
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
@@ -128,7 +127,7 @@ void ft812_init(void)
 {
     // Allume le chip graphique
     PD_HIGH;
-    delay_msCt(20);
+    delay_msCt(25);
     
     //--------------------//
     //  Host command
@@ -136,7 +135,7 @@ void ft812_init(void)
     ft812_send_host_command(HC_CLKINT, HCP_PARAM_EMPTY);
     delay_msCt(1);
     ft812_send_host_command(HC_RST_PULSE, HCP_PARAM_EMPTY);
-    delay_msCt(1);
+    delay_msCt(5);
     ft812_send_host_command(HC_MODE_ACTIVE, HCP_PARAM_EMPTY);
     delay_msCt(20);
     
@@ -159,7 +158,7 @@ void ft812_init(void)
     ft812_memory_write16(REG_VSYNC1, LCD_VSYNC1);
     
     // Clock Setting
-    ft812_memory_write8(REG_PCLK, LCD_PCLK);
+    ft812_memory_write8(REG_PCLK, 0); // (REG_PCLK, LCD_PCLK)
     ft812_memory_write8(REG_SWIZZLE, LCD_SWIZZLE);
     ft812_memory_write8(REG_PCLK_POL, LCD_PCLK_POL);
     ft812_memory_write8(REG_CSPREAD, LCD_CSPREAD);

@@ -189,7 +189,7 @@ void APP_Tasks ( void )
         
             if (appInitialized)
             {
-            
+            /*
                 PD_LOW;
                 delay_msCt(20);
                 PD_HIGH;
@@ -198,8 +198,9 @@ void APP_Tasks ( void )
                 delay_msCt(1);
                 ft812_send_host_command(0x00, 0x00);
                 delay_msCt(50);
+            */
                 
-                //ft812_init();
+                ft812_init();
                 
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
@@ -210,7 +211,8 @@ void APP_Tasks ( void )
         {
             
             //ft812_memory_write16(0x123456, 0x1234);
-            ft812_memory_read8(REG_ID);
+            uint8_t id;
+            id = ft812_memory_read8(REG_ID);
             //ft812_memory_read8(REG_HSYNC1); // Lire 48 si ok
             
             break;
