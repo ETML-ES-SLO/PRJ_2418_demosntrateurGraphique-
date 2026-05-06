@@ -208,8 +208,8 @@ uint8_t ft812_memory_read8(uint32_t address)
     while(PLIB_SPI_IsBusy(SPI_ID_1));
     
     // Attend arrivée dans fifo
-    while (PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1));
-    readData = PLIB_SPI_BufferRead(SPI_ID_1);
+    //while (PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1));
+    readData = PLIB_SPI_BufferRead(SPI_ID_1);  
     
     CS_HIGH;
     

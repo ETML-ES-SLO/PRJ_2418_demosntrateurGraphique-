@@ -212,8 +212,11 @@ void APP_Tasks ( void )
             
             //ft812_memory_write16(0x123456, 0x1234);
             uint8_t id;
-            id = ft812_memory_read8(REG_ID);
-            //ft812_memory_read8(REG_HSYNC1); // Lire 48 si ok
+            //id = ft812_memory_read8(REG_ID);
+            ft812_memory_write8(0x3020D4, 0x80);
+            //delay_usCt(10);
+            ft812_memory_read8(0x3020D4); // Lire 0x80 si ok
+            delay_usCt(5);
             
             break;
         }
