@@ -48,6 +48,7 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 
 ### Schéma de mesures pour le test des fonctions
 
+![schéma de mesures](img_git/sch.png)
 
 ### Configuration de l'oscilloscope pour les mesures SPI
 

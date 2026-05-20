@@ -53,9 +53,7 @@ void ft812_memory_write8(uint32_t address, uint8_t data)
     CS_LOW;
 
     // MSB firt
-    PLIB_SPI_BufferWrite(SPI_ID_1, 
-            ((address >> 16) & 0xFF) + MEM_WRITE_BEGINNING);
-    
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
@@ -163,6 +161,14 @@ void ft812_init(void)
     ft812_memory_write8(REG_PCLK_POL, LCD_PCLK_POL);
     ft812_memory_write8(REG_CSPREAD, LCD_CSPREAD);
     ft812_memory_write8(REG_DITHER, LCD_DITHER);
+    
+    //++
+    /*
+    ft812_memory_write8(0x302090, 0x80);   // GPIO_DIR
+    ft812_memory_write8(0x302094, 0x80);   // GPIO
+    ft812_memory_write8(0x302054, 2);      // DLSWAP_FRAME
+    ft812_memory_write8(0x302070, LCD_PCLK);   // PCLK en dernier
+    */
 }
 
 uint8_t ft812_memory_read8(uint32_t address)
