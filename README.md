@@ -14,6 +14,9 @@ Développer une librairie complète pour pouvoir piloter l'écran **NHD-5.0R-FT8
 
 C:\microchip\harmony\v2_06\apps\PROJ\PRJ_2418_demosntrateurGraphique-\soft\2418_PMP\firmware
 
+## Emplacement des datasheet du projet
+PRJ_2418_demosntrateurGraphique-\doc\Doc_KSA\Doc_PMP
+
 ## Mise en place d'une librairie (Mc32DriverFT812)
 ### Envoie des **Host Command**
 Les **Host Command** sont envoyées au moyen de la fonction **ft812_send_host_command**, le format d'envoi des commandes est donné dans le datasheet **DS**DS_FT81x** de **Bridgetek**.
@@ -58,14 +61,28 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 
 ![Config SPI](img_git/Config_oscillo_protocol_SPI.png)
 
+### Test fonction **ft812_send_host_command** pour écrire une donnée 8bits sur le bus SPI
+Description:<br>Envoie des "Host command" sur le chip F812.<br>
+
 ### Test fonction **spi1_write8** pour écrire une donnée 8bits sur le bus SPI
+Description:<br>
 
 Test d'envoie de la valeur **0xA8** sur le bus SPI à 10MHz
 ![spi1_write8](img_git/spi1_write8.png)
 
+### Test fonction **spi1_write16** pour écrire une donnée 8bits sur le bus SPI
+Description:<br>
+
+### Test fonction **spi1_write32** pour écrire une donnée 8bits sur le bus SPI
+Description:<br>
+
 ### Test fonction **ft812_memory_read8** pour lire une donnée 8bits sur le bus SPI
+Description:<br>
 
 Lecture de REG_ID à l'adresse 0x302000 du chip ft812 pour test de la fonction.
 ![ft812_memory_read8](img_git/ft812_memory_read8_read_REG_ID.png)
 
 Nous pouvons voir que le chip répond bien la valeur attendue qui est 0x7C.
+
+### Test fonction **ft812_init** pour écrire une donnée 8bits sur le bus SPI
+Description:<br>

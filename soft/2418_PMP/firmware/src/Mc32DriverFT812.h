@@ -135,36 +135,36 @@
 
 //----------------------------------------------------------------------------------//
 //-- nom fct : ft812_memory_write8 
-//-- paramètre entrée : command => Commande host
-//--                    commandParam => Paramètre de la commande
+//-- paramètre entrée : address => adresse mémoire sur le FT812
+//--                    data => Valeur à écrire à cette adresse
 //-- paramètre sortie : -
 //-- paramètre référence (IN-OUT) :   - 
-//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
-//-- démonstration : [0x40 + commande][param][0x00] 
+//-- description : Ecriture d'une data de 1 octet sur la RAM du chip FT812 
+//-- démonstration : [addresse][data] 
 //-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
 //----------------------------------------------------------------------------------//
 void ft812_memory_write8(uint32_t address, uint8_t data);
 
 //----------------------------------------------------------------------------------//
-//-- nom fct : ft812_memory_write8 
-//-- paramètre entrée : command => Commande host
-//--                    commandParam => Paramètre de la commande
+//-- nom fct : ft812_memory_write16 
+//-- paramètre entrée : address => adresse mémoire sur le FT812
+//--                    data => Valeur à écrire à cette adresse
 //-- paramètre sortie : -
 //-- paramètre référence (IN-OUT) :   - 
-//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
-//-- démonstration : [0x40 + commande][param][0x00] 
+//-- description : Ecriture d'une data de 2 octets sur la RAM du chip FT812 
+//-- démonstration : [addresse][data] 
 //-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
 //----------------------------------------------------------------------------------//
 void ft812_memory_write16(uint32_t address, uint16_t data);
 
 //----------------------------------------------------------------------------------//
-//-- nom fct : ft812_memory_write8 
-//-- paramètre entrée : command => Commande host
-//--                    commandParam => Paramètre de la commande
+//-- nom fct : ft812_memory_write32 
+//-- paramètre entrée : address => adresse mémoire sur le FT812
+//--                    data => Valeur à écrire à cette adresse
 //-- paramètre sortie : -
 //-- paramètre référence (IN-OUT) :   - 
-//-- description : Envoie de 24 bits par SPI pour envoie de commande sur FT812 
-//-- démonstration : [0x40 + commande][param][0x00] 
+//-- description : Ecriture d'une data de 4 octets sur la RAM du chip FT812 
+//-- démonstration : [addresse][data] 
 //-- aide - référence - lien : Page.16 du datasheet DS_FT81x.pdf
 //----------------------------------------------------------------------------------//
 void ft812_memory_write32(uint32_t address, uint32_t data);
@@ -183,16 +183,25 @@ void ft812_send_host_command(uint8_t command, uint8_t commandParam);
 
 //----------------------------------------------------------------------------------//
 //-- nom fct : ft812_init 
-//-- paramètre entrée : type générique - nom variable 
-//-- paramètre sortie : type générique - nom variable 
-//-- paramètre référence (IN-OUT) :   type générique - nom variable 
-//-- description : fonctionnement de la fct en quelques mots 
-//-- démonstration : calcul 
-//-- aide - référence - lien : doc externe pour la compréhension de la fct 
+//-- paramètre entrée : -
+//-- paramètre sortie : -
+//-- paramètre référence (IN-OUT) :   - 
+//-- description : Initialisation du chip FT812 
+//-- démonstration : - 
+//-- aide - référence - lien : Page.16 du datasheet F800_Series_Programmer_Guide.pdf 
 //----------------------------------------------------------------------------------//
 void ft812_init(void);
 
+//----------------------------------------------------------------------------------//
+//-- nom fct : ft812_memory_read
+//-- paramètre entrée : address -> addresse pour lire la valeur sur le chip FT812
+//-- paramètre sortie : data -> data lue sur le chip FT812
+//-- paramètre référence (IN-OUT) : - 
+//-- description : Lécture de 1 octet sur le chip FT812 
+//-- démonstration : - 
+//-- aide - référence - lien : Page.15 du datasheet DS_FT81x.pdf
+//----------------------------------------------------------------------------------//
 uint8_t ft812_memory_read8(uint32_t address);
 
-#endif _MC32DRIVERFT812_H
+#endif
 
