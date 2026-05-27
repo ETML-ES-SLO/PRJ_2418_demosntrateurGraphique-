@@ -5,10 +5,14 @@ Développer une librairie complète pour pouvoir piloter l'écran **NHD-5.0R-FT8
 
 ## Versioning
 
-**IDE**			: MPLABX IDE v6.15
-**Configurateur**	: Harmony v2.06
-**Compilateur**		: XC32 v2.50
-**OS**			: Windows 10
+**IDE**			: MPLABX IDE v6.15<br>
+**Configurateur**	: Harmony v2.06<br>
+**Compilateur**		: XC32 v2.50<br>
+**OS**			: Windows 10<br>
+
+## Emplacement fichier firmware
+
+C:\microchip\harmony\v2_06\apps\PROJ\PRJ_2418_demosntrateurGraphique-\soft\2418_PMP\firmware
 
 ## Mise en place d'une librairie (Mc32DriverFT812)
 ### Envoie des **Host Command**
