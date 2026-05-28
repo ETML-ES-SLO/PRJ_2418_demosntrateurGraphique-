@@ -173,14 +173,10 @@ void APP_Tasks ( void )
             ft812_memory_read8(REG_HSIZE); // Lire 0x80 si ok
             delay_usCt(5);
             */
-            
-            //ft812_memory_write8(REG_HSIZE, 0x80);
-            delay_usCt(1);
-            //ft812_memory_write16(REG_HSIZE, 0x8040);
-            //delay_usCt(1);
-            ft812_memory_write32(REG_HSIZE, 0x80402010);
-            //delay_usCt(1);
               
+            delay_usCt(1);
+            ft812_send_host_command(HC_MODE_PD_ROMS, HCP_PARAM_EMPTY);
+            
             break;
         }
 

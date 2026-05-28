@@ -64,7 +64,8 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 ### Test fonction **ft812_send_host_command** pour écrire une donnée 8bits sur le bus SPI
 Description:<br>Envoie des **Host command** sur le chip F812.<br>
 
-
+ddddd
+![ft812_send_host_command](img_git/ft812_send_host_command.png)
 
 ### Test fonction **ft812_memory_write8**
 Description:<br>Ecriture d'une data de 1 octet sur la RAM du chip FT812 
