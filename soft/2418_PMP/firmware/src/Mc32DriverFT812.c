@@ -76,9 +76,7 @@ void ft812_memory_write16(uint32_t address, uint16_t data)
     CS_LOW;
 
     // MSB firt
-    PLIB_SPI_BufferWrite(SPI_ID_1, 
-            ((address >> 16) & 0xFF) + MEM_WRITE_BEGINNING);
-    
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
@@ -102,9 +100,7 @@ void ft812_memory_write32(uint32_t address, uint32_t data)
     CS_LOW;
 
     // MSB firt
-    PLIB_SPI_BufferWrite(SPI_ID_1, 
-            ((address >> 16) & 0xFF) + MEM_WRITE_BEGINNING);
-    
+    PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
