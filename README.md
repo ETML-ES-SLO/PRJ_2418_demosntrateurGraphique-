@@ -53,6 +53,10 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 | REG_DLSWAP        | 0x302054      | Display list swap control             |
 | RAM_DL            | 0x300000      | Display List RAM                      |
 
+### Tableau des connexions entre le KIT-ES-PIC32 et l'écran avec chip FT812
+
+![Tableau pinning](img_git/tableau_pin_chip_ft812.png)
+
 ### Schéma de mesures pour le test des fonctions
 
 ![schéma de mesures](img_git/sch.png)
