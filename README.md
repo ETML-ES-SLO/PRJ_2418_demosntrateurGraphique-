@@ -105,3 +105,6 @@ Description:<br>Initialisation du chip FT812<br><br>
 Cette fonction est utilise les fonctions d'écriture sur le chip FT812 testé précédemment.</br>
 Le fonctionnement de cette fonction n'est pas validé car le chip n'est pas initialisé et empêche d'effectuer une lecture de la RAM.<br>
 J'ai pu confirmer qu'il s'agit bien d'un problème d'init car quand j'envoie une demande de l'écriture d'une adresse RAM, le chip ne reste pas silencieux mais répond une valeur d'erreur.
+
+### Flow chart de app.c utilisé pour les test de lécture ROM et écriture RAM
+![FlowChartMain](img_git/FlowChartMain.png)

@@ -30,17 +30,20 @@ void ft812_send_host_command(uint8_t command, uint8_t commandParam)
     // Déclarations de variables
     int SpiBusy;
     
-    // Algorithme pour l'envoi sur SPI
+    // Sélectionne chip low
     CS_LOW;
    
+    // Envoie de la commande avec param
     PLIB_SPI_BufferWrite(SPI_ID_1, command);
     PLIB_SPI_BufferWrite(SPI_ID_1, commandParam);
     PLIB_SPI_BufferWrite(SPI_ID_1, HOST_COMMAND_END);
 
+    // Attend fin de l'envoie
    do {
      SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
    } while (SpiBusy == 1);
    
+   // Déselectionne le chip
    CS_HIGH;
 }
 
@@ -49,21 +52,23 @@ void ft812_memory_write8(uint32_t address, uint8_t data)
     // Déclarations de variables
     int SpiBusy;
     
-    // Algorithme pour l'envoi sur SPI
+    // Sélectionne chip low
     CS_LOW;
 
-    // MSB firt
+    // Envoie adresse MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
-    // Send data
+    // Envoie data à écrire sur l'emplacement mémoire
     PLIB_SPI_BufferWrite(SPI_ID_1, data);
 
+    // Attend fin de l'envoie
     do {
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
+    // Déselectionne le chip
     CS_HIGH;    
 }
 
@@ -72,22 +77,24 @@ void ft812_memory_write16(uint32_t address, uint16_t data)
     // Déclarations de variables
     int SpiBusy;
     
-    // Algorithme pour l'envoi sur SPI
+    // Sélectionne chip low
     CS_LOW;
 
-    // MSB firt
+    // Envoie adresse MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
-    // Send data (litlle-endian)
+    // Envoie data à écrire sur l'emplacement mémoire (litlle-endian)
     PLIB_SPI_BufferWrite(SPI_ID_1, (data & 0xFF));
     PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
     
+    // Attend fin de l'envoie
     do {
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
+    // Déselectionne le chip
     CS_HIGH;    
 }
 
@@ -96,24 +103,26 @@ void ft812_memory_write32(uint32_t address, uint32_t data)
     // Déclarations de variables
     int SpiBusy;
     
-    // Algorithme pour l'envoi sur SPI
+    // Sélectionne chip low
     CS_LOW;
 
-    // MSB firt
+    // Envoie adresse MSB firt
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (address & 0xFF));
     
-    // Send data (litlle-endian)
+    // Envoie data à écrire sur l'emplacement mémoire (litlle-endian)
     PLIB_SPI_BufferWrite(SPI_ID_1, (data & 0xFF));
     PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 8) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 16) & 0xFF);
     PLIB_SPI_BufferWrite(SPI_ID_1, (data >> 24) & 0xFF);
 
+    // Attend fin de l'envoie
     do {
         SpiBusy =  PLIB_SPI_IsBusy(SPI_ID_1) ;
     } while (SpiBusy == 1);
    
+    // Déselectionne le chip
     CS_HIGH;    
 }
 
@@ -180,7 +189,7 @@ uint8_t ft812_memory_read8(uint32_t address)
         (void)dump;
     }
     
-    // Algorithme pour l'envoi sur SPI
+    // Sélectionne chip low
     CS_LOW;
 
     // MSB firt | Envoie adresse à lire
@@ -213,7 +222,9 @@ uint8_t ft812_memory_read8(uint32_t address)
     //while (PLIB_SPI_ReceiverFIFOIsEmpty(SPI_ID_1));
     readData = PLIB_SPI_BufferRead(SPI_ID_1);  
     
+    // Déselectionne le chip
     CS_HIGH;
     
+    // Envoie data lue
     return readData;
 }

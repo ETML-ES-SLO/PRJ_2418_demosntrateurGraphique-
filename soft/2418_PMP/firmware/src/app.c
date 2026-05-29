@@ -165,17 +165,12 @@ void APP_Tasks ( void )
         {
             
             //ft812_memory_write16(0x123456, 0x1234);
-            /*
             ft812Id = ft812_memory_read8(REG_ID);
             delay_usCt(1);
             ft812_memory_write8(REG_HSIZE, 0x80);
             delay_usCt(1);
             ft812_memory_read8(REG_HSIZE); // Lire 0x80 si ok
-            delay_usCt(5);
-            */
-              
-            delay_usCt(1);
-            ft812_send_host_command(HC_MODE_PD_ROMS, HCP_PARAM_EMPTY);
+            delay_usCt(5); 
             
             break;
         }
