@@ -68,7 +68,7 @@ Toutes les adresses de la FT812 proviennent du datasse **DS_FT81x** de **Bridget
 ### Test fonction **ft812_send_host_command** pour écrire une donnée 8bits sur le bus SPI
 Description:<br>Envoie des **Host command** sur le chip F812.<br>
 
-ddddd
+Sur la mesure ci-dessous, on voit bien l'envoi d'une **Host commande**. Elle est composée dans l'ordre suivant [Host command][param host command][dummy byte].
 ![ft812_send_host_command](img_git/ft812_send_host_command.png)
 
 ### Test fonction **ft812_memory_write8**
@@ -76,29 +76,32 @@ Description:<br>Ecriture d'une data de 1 octet sur la RAM du chip FT812
 
 Test d'envoie de la valeur **0x80** sur le bus SPI à 10MHz
 ![ft812_memory_write8](img_git/ft812_memory_write8.png)
+Sur la mesure ci-dessus, nous pouvons bien voir l'écriture de la valeur **0x80** à l'adresse **0x302034**.
 
 ### Test fonction **ft812_memory_write16**
 Description:<br>Ecriture d'une data de 2 octets sur la RAM du chip FT812 
 
 Test d'envoie de la valeur **0x8040** sur le bus SPI à 10MHz
 ![ft812_memory_write16](img_git/ft812_memory_write16.png)
-
+Sur la mesure ci-dessus, nous pouvons bien voir l'écriture de la valeur **0x8040** à l'adresse **0x302034**.
 
 ### Test fonction **ft812_memory_write32**
 Description:<br>Ecriture d'une data de 4 octets sur la RAM du chip FT812 
 
 Test d'envoie de la valeur **0x80402010** sur le bus SPI à 10MHz
 ![ft812_memory_write32](img_git/ft812_memory_write32.png)
-
+Sur la mesure ci-dessus, nous pouvons bien voir l'écriture de la valeur **0x80402010** à l'adresse **0x302034**.
 
 ### Test fonction **ft812_memory_read8** pour lire une donnée 8bits sur le bus SPI
 Description:<br>Lécture de 1 octet sur le chip FT812
 
 Lecture de REG_ID à l'adresse 0x302000 du chip ft812 pour test de la fonction.
 ![ft812_memory_read8](img_git/ft812_memory_read8_read_REG_ID.png)
-
-Nous pouvons voir que le chip répond bien la valeur attendue qui est 0x7C.
+Sur la mesure ci-dessus, nous pouvons voir l'envoi de l'adresse à lire **0x302000**, puis un envoi de **00** pour indiquer la fin de l'adresse, puis l'envoi d'un dummy byte pour la génération d'une clock. Au moment de la génération de la clock, nous pouvons voir que le chip FT812 nous répond la valeur attendue selon la datasheet qui est **0x7C**.
 
 ### Test fonction **ft812_init** pour écrire une donnée 8bits sur le bus SPI
-Description:<br>Initialisation du chip FT812
+Description:<br>Initialisation du chip FT812<br><br>
 
+Cette fonction est utilise les fonctions d'écriture sur le chip FT812 testé précédemment.</br>
+Le fonctionnement de cette fonction n'est pas validé car le chip n'est pas initialisé et empêche d'effectuer une lecture de la RAM.<br>
+J'ai pu confirmer qu'il s'agit bien d'un problème d'init car quand j'envoie une demande de l'écriture d'une adresse RAM, le chip ne reste pas silencieux mais répond une valeur d'erreur.
