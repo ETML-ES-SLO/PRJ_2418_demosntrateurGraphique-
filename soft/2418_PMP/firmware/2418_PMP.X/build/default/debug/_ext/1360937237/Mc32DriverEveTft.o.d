@@ -1,5 +1,6 @@
-build/default/production/_ext/1360937237/Mc32DriverFT812.o: \
- ../src/Mc32DriverFT812.c ../src/Mc32DriverFT812.h \
+build/default/debug/_ext/1360937237/Mc32DriverEveTft.o: \
+ ../src/Mc32DriverEveTft.c ../src/Mc32DriverEveTft.h \
+ ../src/Mc32DriverFT812.h \
  ../../../../../../../framework/peripheral\SPI\plib_spi.h \
  ../../../../../../../framework/peripheral/spi/processor/spi_processor.h \
  ../../../../../../../framework/peripheral/spi/processor/spi_p32xxxx.h \
@@ -45,8 +46,9 @@ build/default/production/_ext/1360937237/Mc32DriverFT812.o: \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioTransmitMode_Unsupported.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioProtocolMode_Unsupported.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h \
- ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h \
- ../../../../../../../bsp/pic32mx_skes/Mc32Delays.h
+ ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h
+
+../src/Mc32DriverEveTft.h:
 
 ../src/Mc32DriverFT812.h:
 
@@ -141,5 +143,3 @@ build/default/production/_ext/1360937237/Mc32DriverFT812.o: \
 ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h:
 
 ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h:
-
-../../../../../../../bsp/pic32mx_skes/Mc32Delays.h:

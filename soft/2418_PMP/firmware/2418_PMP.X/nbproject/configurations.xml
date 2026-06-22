@@ -34,6 +34,7 @@
         </logicalFolder>
         <itemPath>../src/app.h</itemPath>
         <itemPath>../src/Mc32DriverFT812.h</itemPath>
+        <itemPath>../src/Mc32DriverEveTft.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">
@@ -152,6 +153,7 @@
         <itemPath>../src/app.c</itemPath>
         <itemPath>../src/main.c</itemPath>
         <itemPath>../src/Mc32DriverFT812.c</itemPath>
+        <itemPath>../src/Mc32DriverEveTft.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">

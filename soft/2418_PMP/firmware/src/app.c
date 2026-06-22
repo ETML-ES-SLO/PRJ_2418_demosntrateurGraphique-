@@ -56,7 +56,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include <xc.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "Mc32DriverFT812.h"
+#include "Mc32DriverEveTft.h"
+
+#include "Mc32DriverLcd.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -64,28 +68,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-// Adresses F812
-#define REG_HSIZE       0x302034
-#define REG_VSIZE       0x302048
-#define REG_HCYCLE      0x30202C
-#define REG_HOFFSET     0x302030
-#define REG_HSYNC0      0x302038
-#define REG_HSYNC1      0x30203C
-#define REG_VCYCLE      0x302040
-#define REG_VOFFSET     0x302044
-#define REG_VSYNC0      0x30204C
-#define REG_VSYNC1      0x302050
-#define REG_PCLK        0x302070
-#define REG_DLSWAP      0x302054
-#define RAM_DL          0x300000
-
-// Broches /CS et /PD
-/*
-#define CS_LOW()        LATAbits.LATA0 = 0
-#define CS_HIGH()       LATAbits.LATA0 = 1
-#define PD_LOW()        LATAbits.LATA1 = 0
-#define PD_HIGH()       LATAbits.LATA1 = 1
-*/
 
 // *****************************************************************************
 /* Application Data
@@ -119,41 +101,6 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-// SPI écriture d'un byte
-static inline void SPI_WRITE(uint8_t v)
-{
-    SPI1BUF = v;
-    while (!SPI1STATbits.SPIRBF);
-    (void)SPI1BUF;
-}
-
-// Écriture 32 bits dans un registre FT812
-void EVE_WRITE(uint32_t addr, uint32_t val)
-{
-    CS_LOW();
-    SPI_WRITE((addr >> 16) & 0x3F);
-    SPI_WRITE((addr >> 8) & 0xFF);
-    SPI_WRITE(addr & 0xFF);
-    SPI_WRITE(val & 0xFF);
-    SPI_WRITE((val >> 8) & 0xFF);
-    SPI_WRITE((val >> 16) & 0xFF);
-    SPI_WRITE((val >> 24) & 0xFF);
-    CS_HIGH();
-}
-
-// Écriture dans Display List
-void DL_WRITE(uint32_t addr, uint32_t val)
-{
-    CS_LOW();
-    SPI_WRITE((addr >> 16) & 0x3F);
-    SPI_WRITE((addr >> 8) & 0xFF);
-    SPI_WRITE(addr & 0xFF);
-    SPI_WRITE(val & 0xFF);
-    SPI_WRITE((val >> 8) & 0xFF);
-    SPI_WRITE((val >> 16) & 0xFF);
-    SPI_WRITE((val >> 24) & 0xFF);
-    CS_HIGH();
-}
 
 /* TODO:  Add any necessary local functions.
 */
@@ -173,39 +120,6 @@ void DL_WRITE(uint32_t addr, uint32_t val)
     See prototype in app.h.
  */
 
-int ft800_init(void)
-{
-    // ***** Init écran *****
-    //Reset FT812
-    volatile int i;
-    PD_LOW();
-    //for (i = 0; i < 500; i++); // Wait
-    PD_HIGH();
-    //for (i = 0; i < 500; i++); // Wait
-    
-    // Timings 800x400
-    EVE_WRITE(REG_HSIZE, 800);
-    EVE_WRITE(REG_VSIZE, 480);
-    EVE_WRITE(REG_HCYCLE, 928);
-    EVE_WRITE(REG_HOFFSET, 88);
-    EVE_WRITE(REG_HSYNC0, 0);
-    EVE_WRITE(REG_HSYNC1, 48);
-    EVE_WRITE(REG_VCYCLE, 525);
-    EVE_WRITE(REG_VOFFSET, 32);
-    EVE_WRITE(REG_VSYNC0, 0);
-    EVE_WRITE(REG_VSYNC1, 3);
-    
-    // Pixel clock
-    EVE_WRITE(REG_PCLK, 2);
-    
-    // Display List: fond bleu
-    DL_WRITE(RAM_DL + 0, 0x020000FF); // CLEAR_COLOR_RGB(0,0,255)
-    DL_WRITE(RAM_DL + 4, 0x26000007); // CLEAR(1,1,1)
-    DL_WRITE(RAM_DL + 8, 0x00000000); // DISPLAY()
-    
-    // Swap DL
-    EVE_WRITE(REG_DLSWAP, 2);
-}
 
 void APP_Initialize ( void )
 {
@@ -228,6 +142,7 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    static uint8_t ft812Id;
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -236,12 +151,20 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
-            //ft800_init();
         
             if (appInitialized)
             {
-            
+                
+                // Initialisation du chip FT812
+                ft812_init();
+                
+                lcd_init();
+                
+                lcd_gotoxy(1,1);
+                printf_lcd("2418 DemGraphique");
+                
+                lcd_bl_on();
+                
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
@@ -249,8 +172,14 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
-            spi1_wrtie8(0xA8);
+            
+            //ft812_memory_write16(0x123456, 0x1234);
+            ft812Id = ft812_memory_read8(REG_ID);
+            delay_usCt(1);
+            //ft812_memory_write8(REG_HSIZE, 0x80);
+            //delay_usCt(1);
+            //ft812_memory_read8(REG_HSIZE); // Lire 0x80 si ok
+            //delay_usCt(5);    
             
             break;
         }
