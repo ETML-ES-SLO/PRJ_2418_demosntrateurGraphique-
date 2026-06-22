@@ -185,7 +185,8 @@ build/default/debug/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioProtocolMode_Unsupported.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h \
  ../../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h \
- ../src/app.h ../src/Mc32DriverFT812.h ../src/Mc32DriverEveTft.h
+ ../src/app.h ../src/Mc32DriverFT812.h ../src/Mc32DriverEveTft.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h
 
 ../src/app.h:
 
@@ -566,3 +567,5 @@ build/default/debug/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
 ../src/Mc32DriverFT812.h:
 
 ../src/Mc32DriverEveTft.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:

@@ -60,6 +60,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "Mc32DriverFT812.h"
 #include "Mc32DriverEveTft.h"
 
+#include "Mc32DriverLcd.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -140,7 +142,7 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
-    uint8_t ft812Id;
+    static uint8_t ft812Id;
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -156,6 +158,13 @@ void APP_Tasks ( void )
                 // Initialisation du chip FT812
                 ft812_init();
                 
+                lcd_init();
+                
+                lcd_gotoxy(1,1);
+                printf_lcd("2418 DemGraphique");
+                
+                lcd_bl_on();
+                
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
@@ -167,10 +176,10 @@ void APP_Tasks ( void )
             //ft812_memory_write16(0x123456, 0x1234);
             ft812Id = ft812_memory_read8(REG_ID);
             delay_usCt(1);
-            ft812_memory_write8(REG_HSIZE, 0x80);
-            delay_usCt(1);
-            ft812_memory_read8(REG_HSIZE); // Lire 0x80 si ok
-            delay_usCt(5); 
+            //ft812_memory_write8(REG_HSIZE, 0x80);
+            //delay_usCt(1);
+            //ft812_memory_read8(REG_HSIZE); // Lire 0x80 si ok
+            //delay_usCt(5);    
             
             break;
         }
